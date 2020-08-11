@@ -54,5 +54,6 @@ sysinfo.txt
 [uU]nit[tT]ests/obj/
 [cC]onsole[tT]est[pP]rogram/bin/
 [cC]onsole[tT]est[pP]rogram/obj/
-
+ForgeNetworkingCommon/obj
+ForgeNetworkingCommon/bin
 [dD]ocs/mkdocs/[sS]ite/
