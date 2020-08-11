@@ -8,4 +8,12 @@ The code in here was separated out to only include the bare minimum to build the
 
 1. Clone the repository
 2. Open the `MasterServer.sln` file in Visual Studio
-3. Build > Build Solution
+3. Install any missing Nuget packages.
+4. Build > Build Solution
+
+### Command line options
+
+-p, --port The port the server will listen on (Default: 15940)
+-h, --host The ip address the server will listen on (Default: 0.0.0.0)
+-e, --elo The ELO range to use
+-d, --daemon Run the the server without user interaction
