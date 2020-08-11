@@ -1,25 +1,4 @@
-﻿/*-----------------------------+-------------------------------\
-|                                                              |
-|                         !!!NOTICE!!!                         |
-|                                                              |
-|  These libraries are under heavy development so they are     |
-|  subject to make many changes as development continues.      |
-|  For this reason, the libraries may not be well commented.   |
-|  THANK YOU for supporting forge with all your feedback       |
-|  suggestions, bug reports and comments!                      |
-|                                                              |
-|                              - The Forge Team                |
-|                                Bearded Man Studios, Inc.     |
-|                                                              |
-|  This source code, project files, and associated files are   |
-|  copyrighted by Bearded Man Studios, Inc. (2012-2017) and    |
-|  may not be redistributed without written permission.        |
-|                                                              |
-\------------------------------+------------------------------*/
-
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -119,7 +98,8 @@ namespace BeardedManStudios
 		}
 
 		/// <summary>
-		/// Resets the internal byte array and assignes the passed byte array to it
+		/// Resets the internal byte array and assigns the internal byte array to match
+		/// the byte array of the passed in bytes
 		/// </summary>
 		/// <param name="input">The bytes to be cloned into the internal byte array</param>
 		public BMSByte Clone(byte[] input, int count = 0)
@@ -140,7 +120,8 @@ namespace BeardedManStudios
 		}
 
 		/// <summary>
-		/// Resets the internal byte array and assignes the internal byte array of the passed in BMSByte to this ones internal byte array
+		/// Resets the internal byte array and assigns the internal byte array to match
+		/// the byte array of the passed in bytes
 		/// </summary>
 		/// <param name="otherBytes">The other BMSByte that will have its internal byte array cloned to this one</param>
 		/// <returns></returns>
@@ -387,7 +368,7 @@ namespace BeardedManStudios
 		}
 
 		/// <summary>
-		/// An externally accessable method for resetting the pointer, will call internal PointToStart method
+		/// An externally accessible method for resetting the pointer, will call internal PointToStart method
 		/// </summary>
 		public void ResetPointer()
 		{
@@ -406,7 +387,7 @@ namespace BeardedManStudios
 			if (raw)
 				Append(new byte[] { 1 });
 		}
-		
+
 		/// <summary>
 		/// Get an array of a specific type from the internally tracked byte array
 		/// </summary>
@@ -628,14 +609,10 @@ namespace BeardedManStudios
 
 				throw new Exception("Deserialize case not found for this array");
 			}
-#if WINDOWS_UWP
-			else if (type == typeof(Enum))
-#else
 			else if (type.IsEnum)
-#endif
 				return GetBasicType(Enum.GetUnderlyingType(type), start, moveIndex);
 			else
-				throw new Exception("The type " + type.ToString() + " is gettable from basic type, maybe try one of the other getters?");
+				throw new Exception("The type " + type.ToString() + " isn't getable from basic type, maybe try one of the other getters?");
 		}
 
 		/// <summary>
@@ -705,8 +682,8 @@ namespace BeardedManStudios
 		/// <returns>The byte at the specidifed index</returns>
 		public byte this[int i]
 		{
-			get { return byteArr[i]; }
-			set { byteArr[i] = value; }
+			get { return byteArr[i + StartPointer]; }
+			set { byteArr[i + StartPointer] = value; }
 		}
 
 		/// <summary>

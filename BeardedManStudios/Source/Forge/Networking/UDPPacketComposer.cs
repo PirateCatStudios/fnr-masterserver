@@ -1,33 +1,14 @@
-﻿/*-----------------------------+-------------------------------\
-|                                                              |
-|                         !!!NOTICE!!!                         |
-|                                                              |
-|  These libraries are under heavy development so they are     |
-|  subject to make many changes as development continues.      |
-|  For this reason, the libraries may not be well commented.   |
-|  THANK YOU for supporting forge with all your feedback       |
-|  suggestions, bug reports and comments!                      |
-|                                                              |
-|                              - The Forge Team                |
-|                                Bearded Man Studios, Inc.     |
-|                                                              |
-|  This source code, project files, and associated files are   |
-|  copyrighted by Bearded Man Studios, Inc. (2012-2017) and    |
-|  may not be redistributed without written permission.        |
-|                                                              |
-\------------------------------+------------------------------*/
-
-using BeardedManStudios.Forge.Networking.Frame;
-using BeardedManStudios.Threading;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using BeardedManStudios.Forge.Networking.Frame;
+using BeardedManStudios.Threading;
 
 namespace BeardedManStudios.Forge.Networking
 {
 	public class UDPPacketComposer : BasePacketComposer
-    {
+	{
 		/// <summary>
 		/// A base for any composer based events
 		/// </summary>
@@ -67,13 +48,20 @@ namespace BeardedManStudios.Forge.Networking
 
 		public UDPPacketComposer() { }
 
-		public UDPPacketComposer(BaseUDP clientWorker, NetworkingPlayer player, FrameStream frame, bool reliable = false)
+		public UDPPacketComposer(BaseUDP clientWorker, NetworkingPlayer player, FrameStream frame,
+			bool reliable = false)
 		{
 #if DEEP_LOGGING
 			Logging.BMSLog.Log("---------------------------\n" + (new System.Diagnostics.StackTrace()).ToString() + "\nUNIQUE ID: " + frame.UniqueId.ToString() + "\n---------------------------");
 #endif
 
 			Init(clientWorker, player, frame, reliable);
+		}
+
+		public static void SendNewUDPPacket(BaseUDP clientWorker, NetworkingPlayer player,
+			FrameStream frame, bool reliable = false)
+		{
+			new UDPPacketComposer(clientWorker, player, frame, reliable);
 		}
 
 		public void Init(BaseUDP clientWorker, NetworkingPlayer player, FrameStream frame, bool reliable = false)

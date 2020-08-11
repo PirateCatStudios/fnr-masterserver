@@ -1,23 +1,4 @@
-﻿/*-----------------------------+-------------------------------\
-|                                                              |
-|                         !!!NOTICE!!!                         |
-|                                                              |
-|  These libraries are under heavy development so they are     |
-|  subject to make many changes as development continues.      |
-|  For this reason, the libraries may not be well commented.   |
-|  THANK YOU for supporting forge with all your feedback       |
-|  suggestions, bug reports and comments!                      |
-|                                                              |
-|                              - The Forge Team                |
-|                                Bearded Man Studios, Inc.     |
-|                                                              |
-|  This source code, project files, and associated files are   |
-|  copyrighted by Bearded Man Studios, Inc. (2012-2017) and    |
-|  may not be redistributed without written permission.        |
-|                                                              |
-\------------------------------+------------------------------*/
-
-#if STEAMWORKS
+﻿#if STEAMWORKS
 using BeardedManStudios.Forge.Networking.Frame;
 using System;
 using System.Collections.Generic;
@@ -91,7 +72,7 @@ namespace BeardedManStudios.Forge.Networking
 		/// <param name="data">The packet data that is to be sent</param>
 		private void Send(byte[] data)
 		{
-			ClientWorker.Client.Send(data, data.Length, Player.SteamID, Reliable ? Steamworks.EP2PSend.k_EP2PSendReliable : Steamworks.EP2PSend.k_EP2PSendUnreliable);
+			ClientWorker.Client.Send(data, data.Length, Player.SteamID, Steamworks.EP2PSend.k_EP2PSendUnreliable);
 		}
 
 		private void Initialize()
