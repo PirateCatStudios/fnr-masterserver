@@ -1,11 +1,3 @@
-/[Ff]orge [Nn]etworking [Rr]emastered [Uu]nity/[Ll]ibrary/*
-/[Ff]orge [Nn]etworking [Rr]emastered [Uu]nity/[Tt]emp/
-/[Ff]orge [Nn]etworking [Rr]emastered [Uu]nity/[Oo]bj/
-/[Ff]orge [Nn]etworking [Rr]emastered [Uu]nity/[Bb]uild/
-/[Ff]orge [Nn]etworking [Rr]emastered [Uu]nity/[Bb]uilds/
-/[Ff]orge [Nn]etworking [Rr]emastered [Uu]nity/Assets/AssetStoreTools*
-/[Ff]orge [Nn]etworking [Rr]emastered [Uu]nity/[aA]ssets/[bB]earded [mM]an [sS]tudios [iI]nc/Source/
-
 /[Bb]earded[Mm]an[Ss]tudios/bin/
 /[Bb]earded[Mm]an[Ss]tudios/obj/
 
@@ -44,15 +36,5 @@ sysinfo.txt
 # Build obj directories
 [mM]aster[sS]erver/bin/
 [mM]aster[sS]erver/obj/
-[nN]at[hH]ole[pP]unch/bin/
-[nN]at[hH]ole[pP]unch/obj/
-[wW]eb[sS]erver/bin/
-[wW]eb[sS]erver/obj/
-[mM][vV][cC][wW]eb[sS]erver/bin/
-[mM][vV][cC][wW]eb[sS]erver/obj/
-[uU]nit[tT]ests/bin/
-[uU]nit[tT]ests/obj/
-[cC]onsole[tT]est[pP]rogram/bin/
-[cC]onsole[tT]est[pP]rogram/obj/
-
-[dD]ocs/mkdocs/[sS]ite/
+ForgeNetworkingCommon/obj
+ForgeNetworkingCommon/bin
