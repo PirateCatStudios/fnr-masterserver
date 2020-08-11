@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Net;
-using System.Net.Security;
 using System.Net.Sockets;
 
 namespace MasterServer
 {
 	internal static class Program
 	{
+		private const string DEFAULT_HOST = "0.0.0.0";
+		private const ushort DEFAULT_PORT = 15940;
+
 		private static bool isDaemon = false;
-		private static string host = "0.0.0.0";
-		private static ushort port = 15940;
+		private static string host = DEFAULT_HOST;
+		private static ushort port = DEFAULT_PORT;
 		private static int eloRange = 0;
 
 		private static MasterServer server;
 
 		private static void Main(string[] args)
 		{
-			string host = "0.0.0.0";
-			ushort port = 15940;
 			string read = string.Empty;
-			int eloRange = 0;
 
 			var options = new CommandLineOptions();
 			if (CommandLine.Parser.Default.ParseArguments(args, options))
@@ -36,7 +35,7 @@ namespace MasterServer
 
 			if(!isDaemon)
 			{
-				if (host == "0.0.0.0")
+				if (host == DEFAULT_HOST)
 				{
 					Console.WriteLine("Entering nothing will choose defaults.");
 					Console.WriteLine("Enter Host IP (Default: " + GetLocalIpAddress() + "):");
@@ -44,7 +43,7 @@ namespace MasterServer
 					host = string.IsNullOrEmpty(read) ? GetLocalIpAddress() : read;
 				}
 
-				if (port == 15940)
+				if (port == DEFAULT_PORT)
 				{
 					Console.WriteLine("Enter Port (Default: 15940):");
 					read = Console.ReadLine();
