@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.Security;
 using System.Net.Sockets;
 
 namespace MasterServer
@@ -30,21 +31,34 @@ namespace MasterServer
 			}
 			else
 			{
-				Console.WriteLine("Entering nothing will choose defaults.");
-				Console.WriteLine("Enter Host IP (Default: " + GetLocalIpAddress() + "):");
-				read = Console.ReadLine();
-				host = string.IsNullOrEmpty(read) ? GetLocalIpAddress() : read;
+				return;
+			}
 
-				Console.WriteLine("Enter Port (Default: 15940):");
-				read = Console.ReadLine();
-				if (string.IsNullOrEmpty(read))
-					port = 15940;
-				else
-					ushort.TryParse(read, out port);
+			if(!isDaemon)
+			{
+				if (host == "0.0.0.0")
+				{
+					Console.WriteLine("Entering nothing will choose defaults.");
+					Console.WriteLine("Enter Host IP (Default: " + GetLocalIpAddress() + "):");
+					read = Console.ReadLine();
+					host = string.IsNullOrEmpty(read) ? GetLocalIpAddress() : read;
+				}
+
+				if (port == 15940)
+				{
+					Console.WriteLine("Enter Port (Default: 15940):");
+					read = Console.ReadLine();
+					if (string.IsNullOrEmpty(read))
+						port = 15940;
+					else
+						ushort.TryParse(read, out port);
+				}
 			}
 
 			Console.WriteLine("Hosting ip [{0}] on port [{1}]", host, port);
-			PrintHelp();
+
+			if (!isDaemon)
+				PrintHelp();
 
 			server = new MasterServer(host, port)
 			{
@@ -55,11 +69,15 @@ namespace MasterServer
 			while (true)
 			{
 				if (!isDaemon)
-					HandleConsoleInput();
+				{
+					if (HandleConsoleInput())
+						break;
+				}
+
 			}
 		}
 
-		private static void HandleConsoleInput()
+		private static bool HandleConsoleInput()
 		{
 			string read = Console.ReadLine();
 			read = string.IsNullOrEmpty(read) ? read : read.ToLower();
@@ -67,7 +85,7 @@ namespace MasterServer
 			switch (read)
 			{
 				case null:
-					return;
+					return false;
 
 				case "s":
 				case "stop":
@@ -109,8 +127,7 @@ namespace MasterServer
 						Console.WriteLine("Quitting...");
 						server.Dispose();
 					}
-
-					break;
+					return true;
 
 				case "h":
 				case "help":
@@ -137,6 +154,8 @@ namespace MasterServer
 
 					break;
 			}
+
+			return false;
 		}
 
 		private static void PrintHelp()
