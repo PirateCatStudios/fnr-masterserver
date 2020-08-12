@@ -25,7 +25,7 @@ jobs:
 
   publish-github-release:
       docker:
-        - image: cibuilds/github:0.10
+        - image: cibuilds/github:0.13
       resource_class: small
 
 
@@ -41,7 +41,9 @@ jobs:
               if [ "$CIRCLE_TAG" ]; then
                   tar czvf ./masterserver-{$CIRCLE_TAG}.gz ./artifacts/*
 
-                  ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $CIRCLE_TAG masterserver-{$CIRCLE_TAG}.gz
+                  ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME \
+                  -r $CIRCLE_PROJECT_REPONAME -n MasterServer-{$CIRCLE_TAG} --replace \
+                  $CIRCLE_TAG masterserver-{$CIRCLE_TAG}.gz
               else
                 echo "Missing CIRCLE_TAG env var!"
               fi
