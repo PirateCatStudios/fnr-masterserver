@@ -9,16 +9,15 @@ jobs:
 
     steps:
       - checkout
-      - run: mkdir -p artifacts
       - run:
           working_directory: ./MasterServer
           command: dotnet restore
       - run:
           working_directory: ./MasterServer
-          command: dotnet publish -c Release -o ../artifacts --no-restore
+          command: dotnet publish -c Release -o /tmp/artifacts --no-restore
 
       - persist_to_workspace:
-          root: ../artifacts
+          root: /tmp/artifacts
           paths:
             - ./*
 
@@ -28,14 +27,14 @@ jobs:
 
       steps:
         - attach_workspace:
-            at: ./artifacts
+            at: /tmp/artifacts
 
         - run: go get -u github.com/tcnksm/ghr
         - run: go get -u github.com/stevenmatthewt/semantics
 
         - run:
             name: Package and push release
-            working_directory: ./artifacts
+            working_directory: /tmp/artifacts
             command: |
               tag=$(semantics --output-tag)
               if [ "$tag" ]; then
