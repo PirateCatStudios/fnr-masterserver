@@ -6,10 +6,12 @@ orbs:
 jobs:
   build:
     executor: win/default
+    working_directory: ~/project
 
     steps:
       - checkout
-      - run: dotnet build
+      - run: dotnet restore
+      - run: dotnet publish -c Release -o ~/project --no-restore
 
 workflows:
   main:
