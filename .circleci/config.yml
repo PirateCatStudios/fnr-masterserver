@@ -27,6 +27,7 @@ jobs:
         - image: circleci/golang:1.9
 
       steps:
+        - checkout
         - attach_workspace:
             at: ./artifacts
 
@@ -35,11 +36,10 @@ jobs:
 
         - run:
             name: Package and push release
-            working_directory: ./artifacts
             command: |
               tag=$(semantics --output-tag)
               if [ "$tag" ]; then
-                  tar -czvf masterserver-{$tag}.gz .
+                  tar -czvf ./masterserver-{$tag}.gz ./artifacts/*
 
                   ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $tag masterserver-{$tag}.gz
               else
