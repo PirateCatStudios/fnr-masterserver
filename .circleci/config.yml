@@ -34,6 +34,7 @@ jobs:
         - run: go get -u github.com/tcnksm/ghr
         - run: go get -u github.com/stevenmatthewt/semantics
 
+        - add_ssh_keys
         - run:
             name: Package and push release
             command: |
