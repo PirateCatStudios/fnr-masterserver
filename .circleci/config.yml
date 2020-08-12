@@ -48,10 +48,21 @@ jobs:
               fi
 
 workflows:
+  main-build-only:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+            tags:
+              ignore: /.*/
+
   main-release:
     jobs:
       - build:
           filters:
+            branches:
+              ignore: /.*/
             tags:
               only: /^(\d|[1-9]\d*)\.(\d|[1-9]\d*)\.(\d|[1-9]\d*)(-(0|[1-9A-Za-z-][0-9A-Za-z-]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\.(0|[1-9A-Za-z-][0-9A-Za-z-]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$/
       - publish-github-release:
