@@ -40,7 +40,7 @@ jobs:
         - run:
             name: Package and push release
             command: |
-              git fetch --prune --unshallow
+              git fetch --tags
               tag=$(semantics --output-tag)
               if [ "$tag" ]; then
                   tar -czvf ./masterserver-{$tag}.gz ./artifacts/*
