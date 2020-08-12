@@ -37,11 +37,12 @@ jobs:
             command: |
 
               if [ "$CIRCLE_TAG" ]; then
-                  tar czvf ./masterserver-{$CIRCLE_TAG}.gz ./artifacts/*
+                  mkdir -p ./dist
+                  tar czvf ./dist/masterserver-$CIRCLE_TAG.gz ./artifacts/*
 
                   ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME \
-                  -r $CIRCLE_PROJECT_REPONAME -n MasterServer-$CIRCLE_TAG --replace \
-                  $CIRCLE_TAG masterserver-{$CIRCLE_TAG}.gz
+                  -r $CIRCLE_PROJECT_REPONAME -n MasterServer $CIRCLE_TAG --replace \
+                  $CIRCLE_TAG dist
               else
                 echo "Missing CIRCLE_TAG env var!"
               fi
