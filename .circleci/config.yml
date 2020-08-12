@@ -1,0 +1,15 @@
+ version: 2.1
+
+ orbs:
+  win: circleci/windows@2.2.0
+
+ jobs:
+   build:
+     executor: win/default     
+     filter:
+      branches:
+        only: feature/next
+    
+     steps:
+       - checkout
+       - run: dotnet build
