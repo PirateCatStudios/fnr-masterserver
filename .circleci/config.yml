@@ -41,7 +41,7 @@ jobs:
                   tar czvf ./dist/masterserver-$CIRCLE_TAG.gz ./artifacts/*
 
                   ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME \
-                  -r $CIRCLE_PROJECT_REPONAME -n MasterServer $CIRCLE_TAG --replace \
+                  -r $CIRCLE_PROJECT_REPONAME -n "MasterServer ${CIRCLE_TAG}" --replace \
                   $CIRCLE_TAG dist
               else
                 echo "Missing CIRCLE_TAG env var!"
