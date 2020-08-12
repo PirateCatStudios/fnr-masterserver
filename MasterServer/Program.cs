@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using CommandLine;
+using CommandLine.Text;
 
 namespace MasterServer
 {
@@ -14,25 +17,27 @@ namespace MasterServer
 		private static ushort port = DEFAULT_PORT;
 		private static int eloRange = 0;
 
+		private static bool showHelp = false;
+
 		private static MasterServer server;
 
 		private static void Main(string[] args)
 		{
 			string read = string.Empty;
 
-			var options = new CommandLineOptions();
-			if (CommandLine.Parser.Default.ParseArguments(args, options))
-			{
-				ushort.TryParse(options.Port, out port);
-				host = options.Host;
-				eloRange = options.EloRange;
-				isDaemon = options.IsDaemon;
-			}
-			else
-			{
-				return;
-			}
+			var commandParser = new Parser(with => with.HelpWriter = null);
+			var parserResult = commandParser.ParseArguments<CommandLineOptions>(args);
 
+			parserResult.WithParsed(options => {
+				isDaemon = options.IsDaemon;
+				host = options.Host;
+				ushort.TryParse(options.Port, out port);
+				eloRange = options.EloRange;
+			}).WithNotParsed(errs => DisplayHelp(parserResult, errs));
+
+			if (showHelp)
+				return;
+			
 			if(!isDaemon)
 			{
 				if (host == DEFAULT_HOST)
@@ -73,6 +78,29 @@ namespace MasterServer
 						break;
 				}
 
+			}
+		}
+
+		private static void DisplayHelp<T>(ParserResult<T> result, IEnumerable<Error> errors)
+		{
+			HelpText helpText = null;
+			if (errors.IsVersion())
+			{
+				helpText = HelpText.AutoBuild(result);
+
+			}
+			else if(errors.IsHelp())
+			{
+				helpText = HelpText.AutoBuild(result, h => {
+					h.AdditionalNewLineAfterOption = false;
+					return HelpText.DefaultParsingErrorsHandler(result, h);
+				});
+			}
+
+			if (helpText != null)
+			{
+				showHelp = true;
+				Console.WriteLine(helpText);
 			}
 		}
 
