@@ -47,12 +47,6 @@ jobs:
               fi
 
 workflows:
-  main:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only: feature/next
   main-release:
     jobs:
       - build:
