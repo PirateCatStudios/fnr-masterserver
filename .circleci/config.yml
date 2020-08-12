@@ -14,7 +14,9 @@ jobs:
           command: dotnet restore
       - run:
           working_directory: ./MasterServer
-          command: dotnet publish -c Release -o ~/project --no-restore
+          command: dotnet publish -c Release -o /tmp/artifacts --no-restore
+      - store_artifacts:
+          path: /tmp/artifacts
 
 workflows:
   main:
