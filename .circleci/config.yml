@@ -41,7 +41,7 @@ jobs:
               if [ "$tag" ]; then
                   tar -czvf masterserver-{$tag}.gz .
 
-                  ghr -t $GITHUN_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $tag masterserver-{$tag}.gz
+                  ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $tag masterserver-{$tag}.gz
               else
                 echo "The commit message(s) did not indicate a major/minor/patch version."
               fi
