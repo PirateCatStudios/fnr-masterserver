@@ -1,12 +1,11 @@
 version: 2.1
 
 orbs:
-  win: circleci/windows@2.2.0
+  win: circleci/windows@2.4.0
 
 jobs:
   build:
     executor: win/default
-    resource_class: small
 
     steps:
       - checkout
@@ -26,9 +25,8 @@ jobs:
   publish-github-release:
       docker:
         - image: cibuilds/github:0.13
+
       resource_class: small
-
-
 
       steps:
         - attach_workspace:
